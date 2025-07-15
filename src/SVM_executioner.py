@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import joblib
 
+from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
 
@@ -14,14 +15,11 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 def main():
-    df_mfcc = pd.read_pickle("./data/processed/mfcc_data.pkl")  # path to data
+    # Load in data
+    X, y = joblib.load('./data/processed/avg_mfcc_data.pkl')
 
-    # Split and prepare
-    X_train, X_test, y_train, y_test = split_data(df_mfcc, num_mfcc=25, test_size=0.2, random_state=42)
-
-    # Save training and test set for future use with training/testing other models
-    joblib.dump((X_train, y_train), './data/processed/saved_train_set.pkl')
-    joblib.dump((X_test, y_test), './data/processed/saved_test_set.pkl')
+    # Split data into testing and training data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
 
     # Create a pipeline of SVM and define parameter we use to gridsearch with
     pipe = make_pipeline(StandardScaler(), svm.SVC(random_state=3, probability=False))

@@ -12,8 +12,11 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 
 def main():
-    # Bring in training data and split into training and validation sets
-    X_temp, y_temp = joblib.load('./data/processed/saved_train_set.pkl')
+    # Load in data
+    X, y = joblib.load('./data/processed/avg_mfcc_data.pkl')
+
+    # Split data into train/val and test sets, then train and validation sets 
+    X_temp, X_test, y_temp, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
     X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.2 / 0.8, stratify=y_temp, random_state=42)
 
     # Standarize features
