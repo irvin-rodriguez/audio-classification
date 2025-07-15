@@ -1,3 +1,5 @@
+from model_utils import *
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -125,7 +127,6 @@ def main():
 
         print(f"Epoch {epoch+1}/{num_epochs} | Train Loss: {train_epoch_loss:.4f} | Train Acc: {train_accuracy:.4f} | Val Loss: {val_epoch_loss:.4f} | Val Acc: {val_accuracy:.4f} | LR: {current_lr:.6f}")
         
-    
     print(f"Training complete. Best Val Loss: {best_val_loss:.4f}")
 
     plot_loss(train_losses, val_losses)
@@ -133,15 +134,15 @@ def main():
 
     return 0
 
-# Define the neural netword model
+# Define the neural network model
 class Net(nn.Module):
-    def __init__(self):
+    def __init__(self, num_classes=10):
         super(Net, self).__init__()
         self.fc1 = nn.Linear(25, 128)  # 25 inputs
         self.fc2 = nn.Linear(128, 64)
         self.fc3 = nn.Linear(64, 32)
         self.fc4 = nn.Linear(32, 16)  
-        self.fc5 = nn.Linear(16, 10)  # 10 output classes
+        self.fc5 = nn.Linear(16, num_classes)  # 10 output classes
 
         self.relu = nn.ReLU()
         self.dropout = nn.Dropout(0.2)  # 20% dropout rate 
@@ -153,30 +154,6 @@ class Net(nn.Module):
         x = self.dropout(self.relu(self.fc4(x)))
         x = self.fc5(x)
         return x
-    
-def plot_loss(train_losses, val_losses):
-    plt.figure(figsize=(6, 4))
-    plt.plot(train_losses, label='Train Loss')
-    plt.plot(val_losses, label='Val Loss')
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss')
-    plt.title('Loss Over Epochs')
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
-
-def plot_accuracy(train_accuracies, val_accuracies):
-    plt.figure(figsize=(6, 4))
-    plt.plot(train_accuracies, label='Train Accuracy')
-    plt.plot(val_accuracies, label='Val Accuracy')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.title('Accuracy Over Epochs')
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
 
 if __name__ == "__main__":
     main()
