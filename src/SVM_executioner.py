@@ -21,9 +21,9 @@ def main():
 
     # Create a pipeline of SVM and define parameter we use to gridsearch with
     pipe = make_pipeline(StandardScaler(), svm.SVC(random_state=3, probability=False))
-    param_grid = [{'svc__C': [4], 
-                    'svc__kernel': ['rbf'],
-                    'svc__class_weight': ['balanced']}]
+    param_grid = [{'svc__C': [2, 4, 6], 
+                    'svc__kernel': ['rbf', 'linear'],
+                    'svc__class_weight': ['balanced', None]}]
 
     # GridSearchCV tuning
     gs = GridSearchCV(estimator=pipe, param_grid=param_grid, scoring='accuracy', refit=True, cv=3, verbose=3, n_jobs=-1)
@@ -36,7 +36,7 @@ def main():
     # Save model
     joblib.dump(best_model, './models/best_svm_model.pkl')
 
-    print(f"Saved model and test set. Ready for comparison script.")
+    print(f"Saved model and test set.")
 
     return 0
 

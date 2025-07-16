@@ -21,14 +21,14 @@ def main():
     # Split data into train/val and test sets, then train and validation sets 
     X_temp, X_test, y_temp, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
     X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.2 / 0.8, stratify=y_temp, random_state=42)
-    print(f"Train shape: {X_train.shape}, Test shape: {X_test.shape}")
+    print(f"Train shape: {X_train.shape}, Validation shape: {X_val.shape}")
 
     # Convert data to PyTorch tensors
     X_train_tensor = torch.tensor(X_train, dtype=torch.float32).unsqueeze(1)  # adds channel dimension 
     y_train_tensor = torch.tensor(y_train, dtype=torch.long)
     X_val_tensor = torch.tensor(X_val, dtype=torch.float32).unsqueeze(1)  # adds channel dimension 
     y_val_tensor = torch.tensor(y_val, dtype=torch.long)
-    print(f"Train tensor shape: {X_train_tensor.shape}, Test tensor shape: {X_val_tensor.shape}")
+    print(f"Train tensor shape: {X_train_tensor.shape}, Validation tensor shape: {X_val_tensor.shape}")
 
     # Convert data to DataLoader
     train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
@@ -127,8 +127,8 @@ def main():
         
     print(f"Training complete. Best Val Loss: {best_val_loss:.4f}")
 
-    plot_loss(train_losses, val_losses)
-    plot_accuracy(train_accuracies, val_accuracies)
+    plot_loss(train_losses, val_losses, model_name="cnn")
+    plot_accuracy(train_accuracies, val_accuracies, model_name="cnn")
 
 # Define the CNN model
 class CNN(nn.Module):

@@ -129,8 +129,8 @@ def main():
         
     print(f"Training complete. Best Val Loss: {best_val_loss:.4f}")
 
-    plot_loss(train_losses, val_losses)
-    plot_accuracy(train_accuracies, val_accuracies)
+    plot_loss(train_losses, val_losses, model_name="fnn")
+    plot_accuracy(train_accuracies, val_accuracies, model_name="fnn")
 
     return 0
 
@@ -138,11 +138,10 @@ def main():
 class Net(nn.Module):
     def __init__(self, num_classes=10):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(25, 128)  # 25 inputs
-        self.fc2 = nn.Linear(128, 64)
-        self.fc3 = nn.Linear(64, 32)
-        self.fc4 = nn.Linear(32, 16)  
-        self.fc5 = nn.Linear(16, num_classes)  # 10 output classes
+        self.fc1 = nn.Linear(25, 256)  # 25 inputs
+        self.fc2 = nn.Linear(256, 128)
+        self.fc3 = nn.Linear(128, 64)
+        self.fc4 = nn.Linear(64, num_classes)  # 10 output classes
 
         self.relu = nn.ReLU()
         self.dropout = nn.Dropout(0.2)  # 20% dropout rate 
@@ -151,8 +150,7 @@ class Net(nn.Module):
         x = self.dropout(self.relu(self.fc1(x)))
         x = self.dropout(self.relu(self.fc2(x)))
         x = self.dropout(self.relu(self.fc3(x)))
-        x = self.dropout(self.relu(self.fc4(x)))
-        x = self.fc5(x)
+        x = self.fc4(x)
         return x
 
 if __name__ == "__main__":
