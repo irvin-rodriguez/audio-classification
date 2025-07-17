@@ -69,15 +69,15 @@ This project benchmarks different machine learning and deep learning models on t
   </tr>
   <tr>
     <td><strong>SVM</strong><br>87% Test Accuracy</td>
-    <td><img src="./outputs/SVM_normalized_confusion_matrix.png" width="250"></td>
+    <td><img src="./outputs/svm_normalized_confusion_matrix.png" width="250"></td>
   </tr>
   <tr>
     <td><strong>FNN</strong><br>85% Test Accuracy</td>
-    <td><img src="./outputs/FNN_normalized_confusion_matrix.png" width="250"></td>
+    <td><img src="./outputs/fnn_normalized_confusion_matrix.png" width="250"></td>
   </tr>
   <tr>
     <td><strong>CNN</strong><br>97% Test Accuracy</td>
-    <td><img src="./outputs/CNN_normalized_confusion_matrix.png" width="250"></td>
+    <td><img src="./outputs/cnn_normalized_confusion_matrix.png" width="250"></td>
   </tr>
 </table>
 </div>
